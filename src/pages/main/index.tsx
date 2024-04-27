@@ -1,6 +1,6 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
 import {Map} from '../../components/map/Map.tsx';
+import { usePotholeListQuery } from '../../hooks/usePotholeQuery.ts';
 
 interface Position {
   latitude: number;
@@ -8,16 +8,14 @@ interface Position {
 }
 
 export const Main = () => {
-  var latitude = 37.3674001;
-  var longitude = 127.1181196;
+  const {data} = usePotholeListQuery();
+  var latitude = 37.646339416503906;
+  var longitude = 127.02169036865234;
 
   var position = {
     latitude: latitude,
     longitude: longitude
   };
-
-  var markers:Position[] = [];
-  markers.push({latitude: 37.37544345085402, longitude: 127.11224555969238}, {latitude: 37.35975408751081, longitude: 127.10795402526855} , {latitude: 37.37230584065902, longitude: 127.10791110992432});
 
   var polygonPositions:Position[] = [];
   polygonPositions.push(
@@ -36,13 +34,29 @@ export const Main = () => {
   var polygon = {
     paths: polygonPositions,
     fillColor: '#808080',
-    fillOpcaity: 0.5,
+    fillOpacity: 0.5,
     strokeColor: '#f00000',
     strokeOpacity: 0.1,
     strokeWeight: 1
   }
 
-  return (
-    <Map position={position} markers={markers} polygon={polygon}></Map>
-  )
+  if (data) {
+    console.log(data.data);
+    const markers = data.data.map(d => {
+      return {
+        latitude: d.lat,
+        longitude: d.lon
+      }
+    });
+    console.log(markers);
+
+    return (
+      <>
+        <span>
+        위치 안내
+        </span>
+        <Map position={position} markers={markers} polygon={polygon}></Map>
+      </>
+    )
+  }
 };
