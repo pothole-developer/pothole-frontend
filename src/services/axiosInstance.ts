@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
 export const authenticated = axios.create({
-  baseURL: `${import.meta.env.SERVER_BASE_URL}`,
+  baseURL: process.env.REACT_APP_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -9,18 +9,19 @@ export const authenticated = axios.create({
 });
 
 export const unauthenticated = axios.create({
-  baseURL: `${import.meta.env.SERVER_BASE_URL}`,
+  //baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json',
   },
   withCredentials: true,
 });
 
-const refreshAccessToken = async (originalRequest: InternalAxiosRequestConfig) => {
-  const refreshToken = sessionStorage.getItem('rftk');
-  originalRequest.headers['Authorization-refresh'] = `Bearer ${refreshToken}`;
-  return await axios(originalRequest);
-};
+// const refreshAccessToken = async (originalRequest: InternalAxiosRequestConfig) => {
+//   const refreshToken = sessionStorage.getItem('rftk');
+//   originalRequest.headers['Authorization-refresh'] = `Bearer ${refreshToken}`;
+//   return await axios(originalRequest);
+// };
 
 authenticated.interceptors.request.use((config) => {
   config.headers['Authorization'] = localStorage.getItem('actk');
