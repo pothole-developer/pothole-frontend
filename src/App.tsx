@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { Main } from './pages/main/index.tsx';
 
 const App = () => {
   return (
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Main />}/>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
   );
 }
 
