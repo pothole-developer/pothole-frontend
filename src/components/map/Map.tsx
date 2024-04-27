@@ -1,17 +1,17 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { getPotholeInfoContent } from '../../utils/potholeInfo.ts';
+import { setMarker, setPolygon } from '../../utils/naverMapUtils.tsx';
 
 interface MapProps {
     position: Position;
     markers: Position[];
-    polygon: Polygon;
+    polygon: PolygonProps;
 }
 
-interface Polygon {
+interface PolygonProps {
     paths: Position[];
     fillColor: string;
-    fillOpcaity: number;
+    fillOpacity: number;
     strokeColor: string;
     strokeOpacity: number;
     strokeWeight: number;
@@ -54,37 +54,10 @@ export const Map = ({position, markers, polygon} : MapProps) => {
         }
 
         // Marker 생성
-        markers.forEach(m => {
-            const marker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(m.latitude, m.longitude),
-                map: mapInstance,
-            });
-            // Marker 클릭 시 지도 초기화
-            var infowindow = new naver.maps.InfoWindow({
-                content: getPotholeInfoContent({latitude: m.latitude, longitude:m.longitude})
-            });
-            naver.maps.Event.addListener(marker, 'click', () => {
-                if (infowindow.getMap()) {
-                    infowindow.close();
-                } else {
-                    infowindow.open(mapInstance, marker);
-                }
-            });
-        })
+        markers.forEach(m => setMarker(m, mapInstance));
 
         // Polygon 세팅
-        var paths:naver.maps.LatLng[] = [];
-        polygon.paths.forEach(p => paths.push(new naver.maps.LatLng(p.latitude, p.longitude)));
-
-        var polygon_ = new naver.maps.Polygon({
-            map: mapInstance,
-            paths: [paths],
-            fillColor: polygon.fillColor,
-            fillOpacity: polygon.fillOpcaity,
-            strokeColor: polygon.strokeColor,
-            strokeOpacity: polygon.strokeOpacity,
-            strokeWeight: polygon.strokeWeight
-        });
+        setPolygon(polygon, mapInstance);
 
         // 지도 로드 완료
         setMapLoaded(true);
@@ -92,23 +65,20 @@ export const Map = ({position, markers, polygon} : MapProps) => {
 
     useEffect(() => {
         // 스크립트 로딩 확인
-        if (typeof naver === 'undefined') {
+        if (typeof naver === 'undefined' && typeof process.env.REACT_APP_NAVER_MAP_URL !== 'undefined') {
             loadScript(
-                'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=lkpmszjxhi',
+                process.env.REACT_APP_NAVER_MAP_URL,
                 initMap,
             );
         } else {
             initMap();
         }
-    }, [position.latitude, position.longitude, isMapLoaded]);
+    }, [position.latitude, position.longitude, isMapLoaded, markers]);
 
     return (
         <>
         {/* 위치 정보(지도) */}
         <div>
-            <span>
-            위치 안내
-            </span>
             {isMapLoaded && (
                 <div id="map" style={{height: '1000px', width: '100%'}}/>
             )}
