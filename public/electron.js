@@ -13,9 +13,20 @@ function createWindow() {
         }
     });
 
-    const startUrl = "http://localhost:3000";
+    console.log(`${path.join(__dirname, 'build/index.html')}`);
+    console.log(process.env.mode);
 
-    mainWindow.loadURL(startUrl);
+    if (process.env.mode === 'dev') {
+        mainWindow.loadURL('http://localhost:3000')
+    } else {
+        mainWindow.loadURL(
+            url.format({
+              pathname: path.join(__dirname, '../build/index.html'),
+              protocol: 'file:',
+              slashes: true
+            })
+        );
+    }
 
     mainWindow.on('closed', () => {
         mainWindow = null;
