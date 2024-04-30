@@ -13,9 +13,19 @@ function createWindow() {
         }
     });
 
-    const startUrl = "http://localhost:3000";
+    console.log(process.env.NODE_ENV);
 
-    mainWindow.loadURL(startUrl);
+    if (process.env.NODE_ENV === 'dev') {
+        mainWindow.loadURL('http://localhost:3000')
+    } else {
+        mainWindow.loadURL(
+            url.format({
+              pathname: path.join(__dirname, './index.html'),
+              protocol: 'file:',
+              slashes: true
+            })
+        );
+    }
 
     mainWindow.on('closed', () => {
         mainWindow = null;
