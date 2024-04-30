@@ -13,15 +13,14 @@ function createWindow() {
         }
     });
 
-    console.log(`${path.join(__dirname, 'build/index.html')}`);
-    console.log(process.env.mode);
+    console.log(process.env.NODE_ENV);
 
-    if (process.env.mode === 'dev') {
+    if (process.env.NODE_ENV === 'dev') {
         mainWindow.loadURL('http://localhost:3000')
     } else {
         mainWindow.loadURL(
             url.format({
-              pathname: path.join(__dirname, '../build/index.html'),
+              pathname: path.join(__dirname, './index.html'),
               protocol: 'file:',
               slashes: true
             })
