@@ -1,4 +1,3 @@
-import React from 'react'
 import {Map} from '../../components/map/Map.tsx';
 import { usePotholeListQuery } from '../../hooks/usePotholeQuery.ts';
 

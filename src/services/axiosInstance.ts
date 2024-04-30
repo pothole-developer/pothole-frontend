@@ -1,4 +1,4 @@
-import axios, { InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
 export const authenticated = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
