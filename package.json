@@ -24,6 +24,7 @@
     "react-query": "^3.39.3",
     "react-router-dom": "^6.22.3",
     "react-scripts": "^5.0.1",
+    "styled-components": "^6.1.9",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -35,7 +36,12 @@
     "react:test": "react-scripts test",
     "react:eject": "react-scripts eject",
     "build": "npm run react:build && electron-builder build --publish=never",
-    "deploy": "npm run react:build && electron-builder build --publish=always"
+    "build:win32": "electron-builder build --win --ia32 --publish=never",
+    "build:win64": "electron-builder build --win --x64 --publish=never",
+    "build:win": "npm run react:build && npm run build:win32 && npm run build:win64",
+    "deploy": "npm run react:build && electron-builder build --publish=always",
+    "deploy:win32": "npm run react:build && electron-builder build --win --ia32 --publish=always",
+    "deploy:win64": "npm run react:build && electron-builder build --win --x64 --publish=always"
   },
   "build": {
     "asar": true,
@@ -51,6 +57,9 @@
           ]
         }
       ]
+    },
+    "mac": {
+      "target": "dmg"
     }
   },
   "eslintConfig": {
@@ -75,10 +84,11 @@
     "@types/navermaps": "^3.7.5",
     "electron": "^30.0.1",
     "electron-builder": "^24.13.3",
+    "electron-packager": "^17.1.2",
     "wait-on": "^7.2.0"
   },
   "repository": {
-    "type" : "git",
+    "type": "git",
     "url": "https://github.com/pothole-developer/pothole-frontend.git"
   }
 }
