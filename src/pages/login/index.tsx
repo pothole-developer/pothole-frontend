@@ -1,9 +1,12 @@
 import LoginForm from 'components/login/LoginForm.tsx';
+import { AppTtile } from 'components/title/AppTitle';
+import { LoginPageContainer } from './style';
 
 export const LoginPage = () => {
   return (
-    <div>
-        <LoginForm />
-    </div>
+    <LoginPageContainer>
+      <AppTtile />
+      <LoginForm />
+    </LoginPageContainer>
   )
 };
