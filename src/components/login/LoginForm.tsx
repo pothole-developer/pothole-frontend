@@ -79,7 +79,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
-function useEffect(arg0: () => void, arg1: History[]) {
-  throw new Error('Function not implemented.');
-}
