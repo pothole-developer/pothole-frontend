@@ -19,7 +19,7 @@
 
 ## Jira 정보
 Jira Code:
-Jira Link:
+Jira Link: https://porthole.atlassian.net/browse/
 
 
 ## 작업 내용(기대 효과)
