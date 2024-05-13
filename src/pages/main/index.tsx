@@ -1,7 +1,7 @@
 import { AppTtile } from 'components/title/AppTitle.tsx';
 import {Map} from '../../components/map/Map.tsx';
 import { usePotholeListQuery } from '../../hooks/usePotholeQuery.ts';
-import { MainContentContainer, MainPageContainer, MainTitleContainer } from './style.tsx';
+import { FilterContainer, ListViewContainer, MainContentContainer, MainContentListContainer, MainPageContainer, MainTitleContainer, SortContainer } from './style.tsx';
 import { MainTitleInfo } from 'components/title/MainTitleInfo.tsx';
 import { ContactUs } from 'components/title/ContactUs.tsx';
 
@@ -63,13 +63,14 @@ export const Main = () => {
         </MainTitleContainer>
         <MainContentContainer>
           <Map position={position} markers={markers} polygon={polygon}></Map>
-          <div></div>
+          <MainContentListContainer>
+            <FilterContainer>
+            </FilterContainer>
+            <SortContainer />
+            <ListViewContainer />
+          </MainContentListContainer>
         </MainContentContainer>
       </MainPageContainer>
-        {/* <span>
-        위치 안내
-        </span>
-        <Map position={position} markers={markers} polygon={polygon}></Map> */}
       </>
     )
   }
