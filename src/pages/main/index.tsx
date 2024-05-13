@@ -1,5 +1,9 @@
+import { AppTtile } from 'components/title/AppTitle.tsx';
 import {Map} from '../../components/map/Map.tsx';
 import { usePotholeListQuery } from '../../hooks/usePotholeQuery.ts';
+import { FilterContainer, ListViewContainer, MainContentContainer, MainContentListContainer, MainPageContainer, MainTitleContainer, SortContainer } from './style.tsx';
+import { MainTitleInfo } from 'components/title/MainTitleInfo.tsx';
+import { ContactUs } from 'components/title/ContactUs.tsx';
 
 interface Position {
   latitude: number;
@@ -51,10 +55,22 @@ export const Main = () => {
 
     return (
       <>
-        <span>
-        위치 안내
-        </span>
-        <Map position={position} markers={markers} polygon={polygon}></Map>
+      <MainPageContainer>
+        <MainTitleContainer>
+          <AppTtile />
+          <MainTitleInfo />
+          <ContactUs />
+        </MainTitleContainer>
+        <MainContentContainer>
+          <Map position={position} markers={markers} polygon={polygon}></Map>
+          <MainContentListContainer>
+            <FilterContainer>
+            </FilterContainer>
+            <SortContainer />
+            <ListViewContainer />
+          </MainContentListContainer>
+        </MainContentContainer>
+      </MainPageContainer>
       </>
     )
   }

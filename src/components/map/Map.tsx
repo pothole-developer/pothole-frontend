@@ -1,6 +1,6 @@
-import React from 'react'
 import { useState, useEffect } from 'react';
 import { setMarker, setPolygon } from '../../utils/naverMapUtils.tsx';
+import { MapContainer, MapDiv } from './style.tsx';
 
 interface MapProps {
     position: Position;
@@ -80,7 +80,9 @@ export const Map = ({position, markers, polygon} : MapProps) => {
         {/* 위치 정보(지도) */}
         <div>
             {isMapLoaded && (
-                <div id="map" style={{height: '1000px', width: '100%'}}/>
+                <MapContainer>
+                    <MapDiv id="map" />
+                </MapContainer>
             )}
         </div>
         </>
