@@ -28,7 +28,7 @@ export const MainContentListContainer = styled.div`
 export const FilterContainer = styled.div`
   display: flex;
   flex-direction: row;
-  height: '30%';
+  border-bottom: groove;
 `;
 
 export const SortContainer = styled.div`
