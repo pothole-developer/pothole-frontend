@@ -4,6 +4,7 @@ import { usePotholeListQuery } from '../../hooks/usePotholeQuery.ts';
 import { FilterContainer, ListViewContainer, MainContentContainer, MainContentListContainer, MainPageContainer, MainTitleContainer, SortContainer } from './style.tsx';
 import { MainTitleInfo } from 'components/title/MainTitleInfo.tsx';
 import { ContactUs } from 'components/title/ContactUs.tsx';
+import { MainFilter } from 'components/filter/MainFilter.tsx';
 
 interface Position {
   latitude: number;
@@ -65,6 +66,7 @@ export const Main = () => {
           <Map position={position} markers={markers} polygon={polygon}></Map>
           <MainContentListContainer>
             <FilterContainer>
+              <MainFilter/>
             </FilterContainer>
             <SortContainer />
             <ListViewContainer />
