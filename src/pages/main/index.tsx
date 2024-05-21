@@ -5,6 +5,7 @@ import { FilterContainer, ListViewContainer, MainContentContainer, MainContentLi
 import { MainTitleInfo } from 'components/title/MainTitleInfo.tsx';
 import { ContactUs } from 'components/title/ContactUs.tsx';
 import { MainFilter } from 'components/filter/MainFilter.tsx';
+import { PortholeSort } from 'components/sort/PortholeSort.tsx';
 
 interface Position {
   latitude: number;
@@ -68,7 +69,9 @@ export const Main = () => {
             <FilterContainer>
               <MainFilter/>
             </FilterContainer>
-            <SortContainer />
+            <SortContainer>
+              <PortholeSort />
+            </SortContainer>
             <ListViewContainer />
           </MainContentListContainer>
         </MainContentContainer>

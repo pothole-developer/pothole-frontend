@@ -34,7 +34,7 @@ export const FilterContainer = styled.div`
 export const SortContainer = styled.div`
   display: flex;
   flex-direction: row;
-  height: '10%';
+  border-bottom: groove;
 `;
 
 export const ListViewContainer = styled.div`
