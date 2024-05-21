@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FilterComponent, FilterMainContainer, FilterMenuContainer, FilterResultContainer, FilterTitle } from './style';
+import { FilterComponent, FilterMainContainer, FilterMenuContainer, FilterResultContainer } from './style';
 import { FilterSimpleResult } from './FilterSimpleResult';
 import { FilterRangeResult } from './FilterRangeResult';
 

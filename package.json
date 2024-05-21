@@ -24,6 +24,7 @@
     "react-query": "^3.39.3",
     "react-router-dom": "^6.22.3",
     "react-scripts": "^5.0.1",
+    "react-transition-group": "^4.4.5",
     "styled-components": "^6.1.9",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
@@ -82,6 +83,7 @@
   },
   "devDependencies": {
     "@types/navermaps": "^3.7.5",
+    "@types/react-transition-group": "^4.4.10",
     "electron": "^30.0.1",
     "electron-builder": "^24.13.3",
     "electron-packager": "^17.1.2",
