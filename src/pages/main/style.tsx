@@ -4,6 +4,7 @@ export const MainPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 `;
 
 export const MainTitleContainer = styled.div`
@@ -23,6 +24,7 @@ export const MainContentListContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 30vw;
+  align-items: stretch;
 `;
 
 export const FilterContainer = styled.div`
@@ -40,6 +42,6 @@ export const SortContainer = styled.div`
 export const ListViewContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: '60%';
+  overflow: hidden;
 `;
 //  border-right: groove;
