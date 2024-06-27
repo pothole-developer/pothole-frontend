@@ -1,18 +1,17 @@
+import { useNavigate } from 'react-router-dom';
 import { fetchLogin } from '../services/login';
-import { useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 
-interface LoginProps {
-    id: string;
-    password: string;
-  }
-
-export const useLoginQuery = (props:LoginProps) => {
-  return useQuery(['result'], fetchLogin(props), {
+export const useLoginQuery = () => {
+  const navigate = useNavigate();
+  return useMutation(fetchLogin, {
     onSuccess: (data) => {
-      console.log(data);
+      localStorage.setItem('id', data.data.memberId.toString());
+      console.log('로그인 성공');
+      navigate('/main');
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
+      alert('아이디와 비밀번호를 확인해주세요');
     },
   });
 };

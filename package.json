@@ -14,7 +14,6 @@
     "@types/react": "^18.2.75",
     "@types/react-dom": "^18.2.24",
     "axios": "^1.6.8",
-    "concurrently": "^8.2.2",
     "electron-debug": "^3.2.0",
     "electron-is-dev": "^3.0.1",
     "electron-updater": "^6.1.8",
@@ -86,9 +85,11 @@
     "@types/navermaps": "^3.7.5",
     "@types/react-transition-group": "^4.4.10",
     "@types/react-virtualized": "^9.21.30",
+    "concurrently": "^8.2.2",
     "electron": "^30.0.1",
     "electron-builder": "^24.13.3",
     "electron-packager": "^17.1.2",
+    "http-proxy-middleware": "^3.0.0",
     "wait-on": "^7.2.0"
   },
   "repository": {
