@@ -12,22 +12,21 @@ export const ResultTitle = styled.text`
   margin-bottom: 5px;
 `;
 
-// Porthole
-export const PortholeContainer = styled.div`
-  display:flex;
+export const PotholeContainer = styled.div`
+  display: flex;
   background-color: lightgray;
   border: 2px solid groove;
   margin: 5px 10px 5px 10px;
 `;
 
-export const PortholeComponent = styled.div`
-  display:flex;
+export const PotholeComponent = styled.div`
+  display: flex;
   margin-bottom: 5px;
   width: -webkit-fill-available;
 `;
 
-export const PortholeContentComponent = styled.div`
-  display:flex;
+export const PotholeContentComponent = styled.div`
+  display: flex;
   flex-direction: column;
   margin: 5px 0px 5px 10px;
   width: -webkit-fill-available;
@@ -36,7 +35,7 @@ export const PortholeContentComponent = styled.div`
 export const ImageContainer = styled.div`
   padding: 5px 5px 0px 5px;
 `;
-export const PortholeImage = styled.img`
+export const PotholeImage = styled.img`
   width: 100px;
   height: 100px;
   border: 1px solid groove;
@@ -59,7 +58,6 @@ export const DetailButton = styled.button`
   height: min-content;
   width: -webkit-fill-available;
   border-radius: 15px;
-  background-color: #3A3E4D;
+  background-color: #3a3e4d;
   color: white;
-`
-
+`;

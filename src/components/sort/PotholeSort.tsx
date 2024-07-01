@@ -1,9 +1,7 @@
-import { DropdownToggle } from "components/toggle/DropdownToggle";
-import { SortComponent, SortContainer, SortTitle } from "./style";
+import { DropdownToggle } from 'components/toggle/DropdownToggle';
+import { SortComponent, SortContainer, SortTitle } from './style';
 
-
-export const PortholeSort = () => {
-
+export const PotholeSort = () => {
   return (
     <SortContainer>
       <SortComponent>
@@ -14,4 +12,4 @@ export const PortholeSort = () => {
       </SortComponent>
     </SortContainer>
   );
-}
+};
