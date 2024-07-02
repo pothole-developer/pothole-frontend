@@ -18,7 +18,7 @@ export const Main = () => {
   const { data, isLoading, isError } = usePotholeListQuery();
 
   if (data) {
-    const markers = data.data.map((pothole) => ({
+    const markersPos = data.data.map((pothole) => ({
       latitude: pothole.lat,
       longitude: pothole.lon,
     }));
@@ -27,7 +27,7 @@ export const Main = () => {
         <Header />
 
         <MainContentContainer>
-          <Map markers={markers}></Map>
+          <Map markersPos={markersPos}></Map>
 
           <MainContentListContainer>
             <FilterContainer>
