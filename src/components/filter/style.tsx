@@ -1,24 +1,20 @@
 import styled from 'styled-components';
 
 export const FilterMainContainer = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: row;
 `;
 
 export const FilterMenuContainer = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
 export const FilterResultContainer = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
-`;
-
-export const FilterTitle = styled.text`
-  margin: 10px 10px 10px 10px;
 `;
 
 export const FilterComponent = styled.div`

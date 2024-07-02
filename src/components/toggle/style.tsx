@@ -53,7 +53,7 @@ export const DropdownButton = styled.button`
   width: 100px;
 `;
 
-export const DropdownMenu = styled.ul<{ isOpen: boolean }>`
+export const DropdownMenu = styled.ul<{ $isOpen: boolean }>`
   position: absolute;
   top: 100%;
   right: 0;
@@ -64,7 +64,7 @@ export const DropdownMenu = styled.ul<{ isOpen: boolean }>`
   margin: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 1;
-  max-height: ${({ isOpen }) => (isOpen ? '300px' : '0')};
+  max-height: ${({ $isOpen }) => ($isOpen ? '300px' : '0px')};
   overflow-y: auto;
   transition: max-height 0.3s ease-in-out;
 `;
