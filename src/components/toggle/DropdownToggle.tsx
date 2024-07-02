@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ButtonContentContainer, DropdownButton, DropdownItem, DropdownMenu, DropdownWrapper } from './style';
 
-
 interface DropdownOption {
   label: string;
   value: string;
@@ -18,7 +17,6 @@ const initialOptions: DropdownOption[] = [
   { label: '위험도순', value: 'risk' },
   { label: '거리순', value: 'distance' },
 ];
-
 
 export const DropdownToggle: React.FC = () => {
   const [state, setState] = useState<DropdownState>({
@@ -45,10 +43,10 @@ export const DropdownToggle: React.FC = () => {
       <DropdownButton onClick={toggleDropdown}>
         <ButtonContentContainer>
           <text>{selectedOption?.label}</text>
-          <text>{" ▼"}</text>
+          <text>{' ▼'}</text>
         </ButtonContentContainer>
       </DropdownButton>
-      <DropdownMenu isOpen={isOpen}>
+      <DropdownMenu $isOpen={isOpen}>
         {initialOptions.map((option) => (
           <DropdownItem key={option.value} onClick={() => selectOption(option)}>
             {option.label}
@@ -59,4 +57,4 @@ export const DropdownToggle: React.FC = () => {
   );
 
   // 드롭다운 UI 렌더링
-}
+};
