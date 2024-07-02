@@ -1,21 +1,21 @@
-import { FilterResult } from "./style";
+import { FilterResult } from './style';
 
 interface FilterProps {
-  type:string;
-  start:number;
-  end:number;
+  type: string;
+  start: number;
+  end: number;
 }
 
-export const FilterRangeResult = (props:FilterProps) => {
-  let content = props.type + ": " + getResult(props.start, props.end);
-  
+export const FilterRangeResult = (props: FilterProps) => {
+  let content = props.type + ': ' + getResult(props.start, props.end);
+
   return (
-  <FilterResult>
-    <text>{content}</text>
-  </FilterResult>
+    <FilterResult>
+      <span>{content}</span>
+    </FilterResult>
   );
-}
-  
-let getResult = (start:number, end:number) => {
-  return start.toString() + "%" + " ~ " + end.toString() + "%";
-}
+};
+
+let getResult = (start: number, end: number) => {
+  return start.toString() + '%' + ' ~ ' + end.toString() + '%';
+};

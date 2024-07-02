@@ -18,11 +18,11 @@ export const Pothole = ({ pothole }: { pothole: IPotholeInfo }) => {
           <PotholeImage src={pothole.thumbnail} />
         </ImageContainer>
         <PotholeContentComponent>
-          <text>Address</text>
-          <text>{' - ' + pothole.roadName}</text>
+          <span>Address</span>
+          <span>{' - ' + pothole.roadName}</span>
           <ImportanceText>
-            <text>Importance</text>
-            <text>: {pothole.importance}%</text>
+            <span>Importance</span>
+            <span>: {pothole.importance}%</span>
           </ImportanceText>
           <DetailButtonContainer>
             <DetailButton>detail</DetailButton>

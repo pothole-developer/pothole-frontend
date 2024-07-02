@@ -42,8 +42,8 @@ export const DropdownToggle: React.FC = () => {
     <DropdownWrapper>
       <DropdownButton onClick={toggleDropdown}>
         <ButtonContentContainer>
-          <text>{selectedOption?.label}</text>
-          <text>{' ▼'}</text>
+          <label>{selectedOption?.label}</label>
+          <label>{' ▼'}</label>
         </ButtonContentContainer>
       </DropdownButton>
       <DropdownMenu $isOpen={isOpen}>

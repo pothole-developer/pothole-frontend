@@ -5,7 +5,7 @@ export const ResultContainer = styled.div`
   justify-content: center;
 `;
 
-export const ResultTitle = styled.text`
+export const ResultTitle = styled.span`
   font-size: larger;
   font-weight: bold;
   margin-top: 5px;

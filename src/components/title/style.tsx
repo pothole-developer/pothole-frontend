@@ -23,6 +23,6 @@ export const ContactUsContainer = styled.div`
 
 // Contents
 
-export const TitleInfoText = styled.text`
+export const TitleInfoText = styled.h3`
   text-align: center;
 `;
