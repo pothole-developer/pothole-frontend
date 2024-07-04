@@ -1,3 +1,4 @@
+import { IPotholeInfo } from 'services/potholes';
 import { getPotholeInfoContent } from 'utils/potholeInfo';
 
 export const createMap = () => {
@@ -14,24 +15,23 @@ export const createMap = () => {
   return new naver.maps.Map('map', mapOptions);
 };
 
-interface Position {
-  latitude: number;
-  longitude: number;
-}
-
 type IMarker = naver.maps.Marker;
 
-export const updateMap = (mapInstance: naver.maps.Map, markersPos: Position[]) => {
+export const updateMap = (
+  mapInstance: naver.maps.Map,
+  potholesInfo: IPotholeInfo[],
+  setVisiblePotholes: (visiblePotholes: IPotholeInfo[]) => void,
+) => {
   const markers: IMarker[] = [];
-  for (const markerPos of markersPos) {
-    const { latitude, longitude } = markerPos;
+  for (const potholeInfo of potholesInfo) {
+    const { lat, lon } = potholeInfo;
     const marker = new naver.maps.Marker({
       map: mapInstance,
-      position: new naver.maps.LatLng(latitude, longitude),
+      position: new naver.maps.LatLng(lat, lon),
     });
 
     const infoWindow = new naver.maps.InfoWindow({
-      content: getPotholeInfoContent({ latitude, longitude }),
+      content: getPotholeInfoContent({ lat, lon }),
     });
 
     naver.maps.Event.addListener(marker, 'click', () => {
@@ -41,8 +41,8 @@ export const updateMap = (mapInstance: naver.maps.Map, markersPos: Position[]) =
     markers.push(marker);
   }
 
-  const visiblePotholes = [];
   const updateMarkers = () => {
+    const visiblePotholes: IPotholeInfo[] = [];
     const mapBounds = mapInstance.getBounds();
 
     for (let i = 0; i < markers.length; i++) {
@@ -50,11 +50,12 @@ export const updateMap = (mapInstance: naver.maps.Map, markersPos: Position[]) =
       const position = marker.getPosition();
       if (mapBounds.hasPoint(position)) {
         showMarker(marker);
-        visiblePotholes.push(markersPos[i]);
+        visiblePotholes.push(potholesInfo[i]);
       } else {
         hideMarker(marker);
       }
     }
+    setVisiblePotholes(visiblePotholes);
   };
 
   const showMarker = (marker: IMarker) => {
