@@ -24,14 +24,14 @@ export const updateMap = (
 ) => {
   const markers: IMarker[] = [];
   for (const potholeInfo of potholesInfo) {
-    const { lat, lon } = potholeInfo;
+    const { lat, lon, roadName } = potholeInfo;
     const marker = new naver.maps.Marker({
       map: mapInstance,
       position: new naver.maps.LatLng(lat, lon),
     });
 
     const infoWindow = new naver.maps.InfoWindow({
-      content: getPotholeInfoContent({ lat, lon }),
+      content: getPotholeInfoContent({ lat, lon, roadName }),
     });
 
     naver.maps.Event.addListener(marker, 'click', () => {
