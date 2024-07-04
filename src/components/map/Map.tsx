@@ -1,91 +1,54 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { MapContainer, MapDiv } from './style.tsx';
-import { getPotholeInfoContent } from 'utils/potholeInfo.ts';
+import { createMap, updateMap } from 'utils/mapUtils.ts';
+import { usePotholesStore } from 'hooks/usePotholesStore.ts';
+import { useQuery } from 'react-query';
+import { fetchAllPotholes } from 'services/potholes.ts';
 
-interface Position {
-  latitude: number;
-  longitude: number;
-}
+export const Map = () => {
+  const filter = usePotholesStore((state) => state.filter);
+  const setVisiblePotholes = usePotholesStore((state) => state.setVisiblePotholes);
 
-type IMarker = naver.maps.Marker;
+  const { data, isLoading, isError } = useQuery(['potholes', filter], () => fetchAllPotholes());
+  const [scriptLoaded, setScriptLoaded] = useState(false);
 
-export const Map = ({ markersPos }: { markersPos: Position[] }) => {
   const initMap = useCallback(() => {
-    // 추가 옵션 설정
-    const mapOptions = {
-      zoomControl: true,
-      zoomControlOptions: {
-        style: naver.maps.ZoomControlStyle.SMALL,
-        position: naver.maps.Position.TOP_LEFT,
-      },
-      center: new naver.maps.LatLng(37.646339416503906, 127.02169036865234),
-      zoom: 16,
-    };
-
-    // 지도 초기화 확인
-    const mapInstance = new naver.maps.Map('map', mapOptions);
-
-    naver.maps.Event.addListener(mapInstance, 'zoom_changed', function () {
-      updateMarkers();
-    });
-
-    naver.maps.Event.addListener(mapInstance, 'dragend', function () {
-      updateMarkers();
-    });
-
-    const markers: IMarker[] = [];
-    const infoWindows = [];
-
-    for (const markerPos of markersPos) {
-      const { latitude, longitude } = markerPos;
-      const marker = new naver.maps.Marker({
-        map: mapInstance,
-        position: new naver.maps.LatLng(latitude, longitude),
-      });
-
-      const infoWindow = new naver.maps.InfoWindow({
-        content: getPotholeInfoContent({ latitude, longitude }),
-      });
-
-      markers.push(marker);
-      infoWindows.push(infoWindow);
+    const mapInstance = createMap();
+    if (data) {
+      updateMap(mapInstance, data.data, setVisiblePotholes);
     }
+  }, [data, setVisiblePotholes]);
 
-    const updateMarkers = () => {
-      const mapBounds = mapInstance.getBounds();
-
-      for (const marker of markers) {
-        const position = marker.getPosition();
-
-        if (mapBounds.hasPoint(position)) {
-          showMarker(marker);
-        } else {
-          hideMarker(marker);
+  useEffect(() => {
+    const loadScript = () => {
+      if (!scriptLoaded && typeof process.env.REACT_APP_NAVER_MAP_URL !== 'undefined') {
+        const existingScript = document.getElementById('naver-map-script');
+        if (existingScript) {
+          existingScript.onload = () => setScriptLoaded(true);
+          return;
         }
+
+        const naverMapScript = document.createElement('script');
+        naverMapScript.id = 'naver-map-script';
+        naverMapScript.src = process.env.REACT_APP_NAVER_MAP_URL;
+        naverMapScript.onload = () => setScriptLoaded(true);
+        naverMapScript.async = true;
+        document.head.appendChild(naverMapScript);
       }
     };
 
-    const showMarker = (marker: IMarker) => {
-      marker.setMap(mapInstance);
-    };
-
-    const hideMarker = (marker: IMarker) => {
-      marker.setMap(null);
-    };
-  }, [markersPos]);
+    loadScript();
+  }, [scriptLoaded]);
 
   useEffect(() => {
-    if (typeof process.env.REACT_APP_NAVER_MAP_URL !== 'undefined') {
-      const naverMapScript = document.createElement('script');
-      naverMapScript.onload = initMap;
-      naverMapScript.src = process.env.REACT_APP_NAVER_MAP_URL;
-      document.head.appendChild(naverMapScript);
-
-      return () => {
-        document.head.removeChild(naverMapScript);
-      };
+    if (scriptLoaded && data) {
+      initMap();
     }
-  }, [initMap]);
+  }, [scriptLoaded, data, initMap]);
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (isError) return <div>Error loading data</div>;
 
   return (
     <MapContainer>

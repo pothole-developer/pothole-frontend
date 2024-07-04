@@ -12,41 +12,30 @@ import { PotholeSort } from 'components/sort/PotholeSort.tsx';
 import { PotholeResult } from 'components/listview/PotholeResult.tsx';
 import { PotholeListView } from 'components/list/PotholeListView.tsx';
 import { Header } from './Header.tsx';
-import { usePotholeListQuery } from 'hooks/usePotholeQuery.ts';
 
 export const Main = () => {
-  const { data, isLoading, isError } = usePotholeListQuery();
+  return (
+    <MainPageContainer>
+      <Header />
 
-  if (data) {
-    const markersPos = data.data.map((pothole) => ({
-      latitude: pothole.lat,
-      longitude: pothole.lon,
-    }));
-    return (
-      <MainPageContainer>
-        <Header />
+      <MainContentContainer>
+        <Map></Map>
 
-        <MainContentContainer>
-          <Map markersPos={markersPos}></Map>
+        <MainContentListContainer>
+          <FilterContainer>
+            <MainFilter />
+          </FilterContainer>
 
-          <MainContentListContainer>
-            <FilterContainer>
-              <MainFilter />
-            </FilterContainer>
-            <SortContainer>
-              <PotholeSort />
-            </SortContainer>
-            <ListViewContainer>
-              <PotholeResult numPotholes={data.data.length} />
-              <PotholeListView items={data.data} />
-            </ListViewContainer>
-          </MainContentListContainer>
-        </MainContentContainer>
-      </MainPageContainer>
-    );
-  }
+          <SortContainer>
+            <PotholeSort />
+          </SortContainer>
 
-  if (isLoading) return <div>Loading</div>;
-
-  if (isError) return <div>Error</div>;
+          <ListViewContainer>
+            <PotholeResult />
+            <PotholeListView />
+          </ListViewContainer>
+        </MainContentListContainer>
+      </MainContentContainer>
+    </MainPageContainer>
+  );
 };
