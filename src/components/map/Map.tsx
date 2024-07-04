@@ -1,30 +1,54 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { MapContainer, MapDiv } from './style.tsx';
 import { createMap, updateMap } from 'utils/mapUtils.ts';
+import { usePotholesStore } from 'hooks/usePotholesStore.ts';
+import { useQuery } from 'react-query';
+import { fetchAllPotholes } from 'services/potholes.ts';
 
-interface Position {
-  latitude: number;
-  longitude: number;
-}
+export const Map = () => {
+  const filter = usePotholesStore((state) => state.filter);
+  const setVisiblePotholes = usePotholesStore((state) => state.setVisiblePotholes);
 
-export const Map = ({ markersPos }: { markersPos: Position[] }) => {
-  const initMap = () => {
+  const { data, isLoading, isError } = useQuery(['potholes', filter], () => fetchAllPotholes());
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
+  const initMap = useCallback(() => {
     const mapInstance = createMap();
-    updateMap(mapInstance, markersPos);
-  };
+    if (data) {
+      updateMap(mapInstance, data.data, setVisiblePotholes);
+    }
+  }, [data, setVisiblePotholes]);
 
   useEffect(() => {
-    if (typeof process.env.REACT_APP_NAVER_MAP_URL !== 'undefined') {
-      const naverMapScript = document.createElement('script');
-      naverMapScript.onload = initMap;
-      naverMapScript.src = process.env.REACT_APP_NAVER_MAP_URL;
-      document.head.appendChild(naverMapScript);
+    const loadScript = () => {
+      if (!scriptLoaded && typeof process.env.REACT_APP_NAVER_MAP_URL !== 'undefined') {
+        const existingScript = document.getElementById('naver-map-script');
+        if (existingScript) {
+          existingScript.onload = () => setScriptLoaded(true);
+          return;
+        }
 
-      return () => {
-        document.head.removeChild(naverMapScript);
-      };
+        const naverMapScript = document.createElement('script');
+        naverMapScript.id = 'naver-map-script';
+        naverMapScript.src = process.env.REACT_APP_NAVER_MAP_URL;
+        naverMapScript.onload = () => setScriptLoaded(true);
+        naverMapScript.async = true;
+        document.head.appendChild(naverMapScript);
+      }
+    };
+
+    loadScript();
+  }, [scriptLoaded]);
+
+  useEffect(() => {
+    if (scriptLoaded && data) {
+      initMap();
     }
-  }, []);
+  }, [scriptLoaded, data, initMap]);
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (isError) return <div>Error loading data</div>;
 
   return (
     <MapContainer>
