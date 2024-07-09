@@ -96,6 +96,7 @@
     "@storybook/blocks": "^8.1.11",
     "@storybook/preset-create-react-app": "^8.1.11",
     "@storybook/react": "^8.1.11",
+    "@storybook/react-vite": "^8.1.11",
     "@storybook/react-webpack5": "^8.1.11",
     "@storybook/test": "^8.1.11",
     "@types/navermaps": "^3.7.5",
@@ -110,8 +111,7 @@
     "prop-types": "^15.8.1",
     "storybook": "^8.1.11",
     "vite-plugin-svgr": "^4.2.0",
-    "wait-on": "^7.2.0",
-    "webpack": "^5.92.1"
+    "wait-on": "^7.2.0"
   },
   "repository": {
     "type": "git",
