@@ -1,44 +1,54 @@
-import { useCallback, useEffect } from 'react';
-import { setMarker } from 'utils/naverMapUtils.tsx';
+import { useEffect, useState, useCallback } from 'react';
 import { MapContainer, MapDiv } from './style.tsx';
+import { createMap, updateMap } from 'utils/mapUtils.ts';
+import { usePotholesStore } from 'hooks/usePotholesStore.ts';
+import { useQuery } from 'react-query';
+import { fetchAllPotholes } from 'services/potholes.ts';
 
-interface Position {
-  latitude: number;
-  longitude: number;
-}
+export const Map = () => {
+  const filter = usePotholesStore((state) => state.filter);
+  const setVisiblePotholes = usePotholesStore((state) => state.setVisiblePotholes);
 
-export const Map = ({ markers }: { markers: Position[] }) => {
+  const { data, isLoading, isError } = useQuery(['potholes', filter], () => fetchAllPotholes());
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
   const initMap = useCallback(() => {
-    // 추가 옵션 설정
-    const mapOptions = {
-      zoomControl: true,
-      zoomControlOptions: {
-        style: naver.maps.ZoomControlStyle.SMALL,
-        position: naver.maps.Position.TOP_LEFT,
-      },
-      center: new naver.maps.LatLng(37.646339416503906, 127.02169036865234),
-      zoom: 16,
-    };
-
-    // 지도 초기화 확인
-    const mapInstance = new naver.maps.Map('map', mapOptions);
-
-    // Marker 생성
-    markers.forEach((m) => setMarker(m, mapInstance));
-  }, [markers]);
+    const mapInstance = createMap();
+    if (data) {
+      updateMap(mapInstance, data.data, setVisiblePotholes);
+    }
+  }, [data, setVisiblePotholes]);
 
   useEffect(() => {
-    if (typeof process.env.REACT_APP_NAVER_MAP_URL !== 'undefined') {
-      const naverMapScript = document.createElement('script');
-      naverMapScript.onload = initMap;
-      naverMapScript.src = process.env.REACT_APP_NAVER_MAP_URL;
-      document.head.appendChild(naverMapScript);
+    const loadScript = () => {
+      if (!scriptLoaded && typeof import.meta.env.VITE_NAVER_MAP_URL !== 'undefined') {
+        const existingScript = document.getElementById('naver-map-script');
+        if (existingScript) {
+          existingScript.onload = () => setScriptLoaded(true);
+          return;
+        }
 
-      return () => {
-        document.head.removeChild(naverMapScript);
-      };
+        const naverMapScript = document.createElement('script');
+        naverMapScript.id = 'naver-map-script';
+        naverMapScript.src = import.meta.env.VITE_NAVER_MAP_URL;
+        naverMapScript.onload = () => setScriptLoaded(true);
+        naverMapScript.async = true;
+        document.head.appendChild(naverMapScript);
+      }
+    };
+
+    loadScript();
+  }, [scriptLoaded]);
+
+  useEffect(() => {
+    if (scriptLoaded && data) {
+      initMap();
     }
-  }, [initMap]);
+  }, [scriptLoaded, data, initMap]);
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (isError) return <div>Error loading data</div>;
 
   return (
     <MapContainer>

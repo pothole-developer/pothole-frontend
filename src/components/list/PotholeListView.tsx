@@ -1,18 +1,21 @@
 import { Pothole } from 'components/listview/Pothole';
 import React from 'react';
-import { ListViewOl } from './style';
 import { IPotholeInfo } from 'services/potholes';
+import { Virtuoso } from 'react-virtuoso';
+import { usePotholesStore } from 'hooks/usePotholesStore';
 
-interface ListViewProps {
-  items: IPotholeInfo[];
-}
+export const PotholeListView = () => {
+  const visiblePotholes = usePotholesStore((state) => state.visiblePotholes);
 
-export const PotholeListView: React.FC<ListViewProps> = ({ items }) => {
+  const InnerItem = React.memo(({ item }: { item: IPotholeInfo }) => {
+    return <Pothole pothole={item} key={item.potholeId} />;
+  });
+
   return (
-    <ListViewOl>
-      {items.map((item) => (
-        <Pothole pothole={item} key={item.potholeId} />
-      ))}
-    </ListViewOl>
+    <Virtuoso
+      data={visiblePotholes}
+      itemContent={(_, item) => <InnerItem item={item} />}
+      style={{ height: '100vh' }}
+    ></Virtuoso>
   );
 };
