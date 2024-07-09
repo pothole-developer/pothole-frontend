@@ -21,7 +21,7 @@ export const Map = () => {
 
   useEffect(() => {
     const loadScript = () => {
-      if (!scriptLoaded && typeof process.env.REACT_APP_NAVER_MAP_URL !== 'undefined') {
+      if (!scriptLoaded && typeof import.meta.env.VITE_NAVER_MAP_URL !== 'undefined') {
         const existingScript = document.getElementById('naver-map-script');
         if (existingScript) {
           existingScript.onload = () => setScriptLoaded(true);
@@ -30,7 +30,7 @@ export const Map = () => {
 
         const naverMapScript = document.createElement('script');
         naverMapScript.id = 'naver-map-script';
-        naverMapScript.src = process.env.REACT_APP_NAVER_MAP_URL;
+        naverMapScript.src = import.meta.env.VITE_NAVER_MAP_URL;
         naverMapScript.onload = () => setScriptLoaded(true);
         naverMapScript.async = true;
         document.head.appendChild(naverMapScript);

@@ -29,5 +29,9 @@
   },
   "include": [
     "src",
-  ]
+    "vite-env.d.ts"
+  ],
+  "files": [
+    "svg.d.ts",
+  ],
 }
