@@ -5,15 +5,14 @@ export interface ButtonProps {
   background: string;
   color: string;
   width: string;
-  text: string;
+  border?: string;
   children?: React.ReactNode;
 }
 
-export const Button = ({ onClick, background, color, width, text, children }: ButtonProps) => {
+export const Button = ({ onClick, background, color, width, border, children }: ButtonProps) => {
   return (
-    <StyledButton onClick={onClick} $background={background} $color={color} $width={width}>
+    <StyledButton onClick={onClick} $background={background} $color={color} $width={width} $border={border}>
       {children}
-      {text}
     </StyledButton>
   );
 };

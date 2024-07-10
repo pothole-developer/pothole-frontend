@@ -17,11 +17,11 @@ export const FilterButton: Story = {
     background: '#257CFF',
     color: '#FFFFFF',
     width: '100px',
-    text: '필터',
   },
   render: (args) => (
     <Button {...args}>
       <Filter />
+      필터
     </Button>
   ),
 };
