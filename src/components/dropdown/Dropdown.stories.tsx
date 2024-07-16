@@ -11,5 +11,5 @@ export default meta;
 type Story = StoryObj<typeof Dropdown>;
 
 export const DropdownTest: Story = {
-  render: () => <Dropdown></Dropdown>,
+  render: () => <Dropdown dropdownList={['a', 'b']} onChange={() => alert('selected')} value="select"></Dropdown>,
 };
