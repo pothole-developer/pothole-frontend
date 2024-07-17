@@ -15,7 +15,7 @@ export const PotholeListView = () => {
     <Virtuoso
       data={visiblePotholes}
       itemContent={(_, item) => <InnerItem item={item} />}
-      style={{ height: '100vh' }}
+      style={{ display: 'flex' }}
     ></Virtuoso>
   );
 };
