@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { unauthenticated } from './axiosInstance';
+import { axiosInstance } from './axiosInstance';
 
 export interface IPotholeInfo {
   potholeId: number;
@@ -19,6 +19,6 @@ interface IPotholesResponse {
 }
 
 export const fetchAllPotholes = async () => {
-  const response: AxiosResponse<IPotholesResponse> = await unauthenticated.get('/manager/potholes');
+  const response: AxiosResponse<IPotholesResponse> = await axiosInstance.get('/manager/potholes');
   return response.data;
 };
