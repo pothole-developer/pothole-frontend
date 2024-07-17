@@ -8,7 +8,7 @@ import {
   PotholeContainer,
   PotholeContentComponent,
   PotholeImage,
-} from './style';
+} from './Pothole.style';
 
 export const Pothole = ({ pothole }: { pothole: IPotholeInfo }) => {
   return (
