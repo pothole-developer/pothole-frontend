@@ -25,6 +25,7 @@ export const Dropdown = ({ dropdownList, value, onChange }: DropdownProps) => {
   return (
     <DropdownWrapper>
       <Button
+        type="button"
         onClick={handleButtonClick}
         background={colors.mainWhite}
         color={colors.mainBlack}
