@@ -20,28 +20,9 @@ export const MainContentContainer = styled.div`
   height: 90vh;
 `;
 
-export const MainContentListContainer = styled.div`
+export const ListViewContainer = styled.aside`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 30vw;
-  align-items: stretch;
 `;
-
-export const FilterContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  border-bottom: groove;
-`;
-
-export const SortContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  border-bottom: groove;
-`;
-
-export const ListViewContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-`;
-//  border-right: groove;

@@ -1,4 +1,4 @@
-import { unauthenticated } from './axiosInstance.ts';
+import { axiosInstance } from './axiosInstance.ts';
 
 interface LoginProps {
   email: string;
@@ -15,6 +15,6 @@ interface LoginResponse {
 }
 
 export const fetchLogin = async (props: LoginProps) => {
-  const { data } = await unauthenticated.post<LoginResponse>('/auth/manager/login', props);
+  const { data } = await axiosInstance.post<LoginResponse>('/auth/manager/login', props);
   return data;
 };

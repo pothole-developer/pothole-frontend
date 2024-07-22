@@ -1,22 +1,23 @@
 import { IPotholeInfo } from 'services/potholes';
 import { create } from 'zustand';
 
-interface IFilter {
+export interface IFilter {
   minImportance: number;
   maxImportance: number;
-  processStatus: 'REGISTER' | 'EMERGENCY_ONGOING' | 'ONGOING' | 'COMPLETE' | 'STOP';
+  potholeProgressStatus?: 'REGISTER' | 'EMERGENCY_ONGOING' | 'EMERGENCY_COMPLETE' | 'ONGOING' | 'COMPLETE' | 'STOP';
+  sort?: '중요도순' | '위험도순';
 }
 
 interface PotholesStoreState {
   visiblePotholes: IPotholeInfo[];
-  filter: IFilter | null;
+  filter: IFilter;
   setVisiblePotholes: (visiblePotholes: IPotholeInfo[]) => void;
   setFilter: (filter: IFilter) => void;
 }
 
 export const usePotholesStore = create<PotholesStoreState>((set) => ({
   visiblePotholes: [],
-  filter: null,
+  filter: { minImportance: 0, maxImportance: 100 },
   setVisiblePotholes: (visiblePotholes) => set({ visiblePotholes }),
   setFilter: (filter) => set({ filter }),
 }));

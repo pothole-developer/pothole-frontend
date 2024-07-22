@@ -13,9 +13,7 @@ function createWindow() {
     },
   });
 
-  console.log(import.meta.env.NODE_ENV);
-
-  if (import.meta.env.NODE_ENV === 'dev') {
+  if (process.env.NODE_ENV === 'dev') {
     mainWindow.loadURL('http://localhost:3000');
   } else {
     mainWindow.loadURL(
