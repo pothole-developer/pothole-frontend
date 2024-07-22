@@ -1,14 +1,16 @@
 import { IPotholeInfo } from 'services/potholes';
 import { getPotholeInfoContent } from 'utils/potholeInfo';
 
-export const createMap = () => {
+export const createMap = (currentLoc?: naver.maps.Coord) => {
+  const [lat, lng] = [currentLoc?.y || 37.646339416503906, currentLoc?.x || 127.02169036865234];
+
   const mapOptions = {
     zoomControl: true,
     zoomControlOptions: {
       style: naver.maps.ZoomControlStyle.SMALL,
       position: naver.maps.Position.TOP_LEFT,
     },
-    center: new naver.maps.LatLng(37.646339416503906, 127.02169036865234),
+    center: new naver.maps.LatLng(lat, lng),
     zoom: 16,
   };
 
@@ -66,7 +68,13 @@ export const updateMap = (
     marker.setMap(null);
   };
 
+  updateMarkers();
+
+  naver.maps.Event.clearListeners(mapInstance, 'dragend');
+  naver.maps.Event.addListener(mapInstance, 'dragend', () => updateMarkers());
+
+  naver.maps.Event.clearListeners(mapInstance, 'zoom_changed');
   naver.maps.Event.addListener(mapInstance, 'zoom_changed', () => updateMarkers());
 
-  naver.maps.Event.addListener(mapInstance, 'dragend', () => updateMarkers());
+  return markers;
 };
