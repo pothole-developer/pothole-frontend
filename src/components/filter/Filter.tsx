@@ -5,28 +5,58 @@ import { Button } from 'components/button/Button';
 import { colors } from 'styles/theme';
 import Refresh from 'assets/images/refresh.svg?react';
 import { Controller, useForm } from 'react-hook-form';
+import { usePotholesStore } from 'hooks/usePotholesStore';
+
+const potholeProgressStatusList = [
+  { display: '최초발견', value: 'REGISTER' },
+  { display: '응급보수 중', value: 'EMERGENCY_ONGOING' },
+  { display: '응급보수 완료', value: 'EMERGENCY_COMPLETE' },
+  { display: '정식보수 중', value: 'ONGOING' },
+  { display: '정식보수 완료', value: 'COMPLETE' },
+  { display: '보수중단', value: 'STOP' },
+] as const;
+
+const sortStatusList = ['중요도순', '위험도순'];
+
+type IPotholeProgressStatusDisplay = (typeof potholeProgressStatusList)[number]['display'];
 
 interface FormValues {
   minImportance: number;
   maxImportance: number;
-  processStauts: string;
-  sort: string;
+  potholeProgressStatus?: IPotholeProgressStatusDisplay;
+  sort: '중요도순' | '위험도순';
 }
 
 export const Filter = () => {
-  const { register, handleSubmit, control, reset } = useForm<FormValues>();
+  const currentFilterValue = usePotholesStore((state) => state.filter);
+  const setFilter = usePotholesStore((state) => state.setFilter);
+  const { register, handleSubmit, control, reset } = useForm<FormValues>({
+    defaultValues: {
+      minImportance: currentFilterValue.minImportance,
+      maxImportance: currentFilterValue.maxImportance,
+      potholeProgressStatus: potholeProgressStatusList.find(
+        (item) => item.value === currentFilterValue.potholeProgressStatus,
+      )?.display,
+      sort: currentFilterValue.sort,
+    },
+  });
 
   const onSubmit = (data: FormValues) => {
-    if (data.maxImportance < data.minImportance) {
+    const { minImportance, maxImportance, potholeProgressStatus, sort } = data;
+    if (maxImportance < minImportance) {
       alert('올바르지 않는 범위입니다');
       return;
     }
 
-    // TODO: 필터적용 API 연동
+    const potholeProgressStatusValue = potholeProgressStatusList.find(
+      (item) => item.display === potholeProgressStatus,
+    )?.value;
+    setFilter({ minImportance, maxImportance, potholeProgressStatus: potholeProgressStatusValue, sort });
   };
 
   const handleResetClick = () => {
-    reset();
+    reset({ minImportance: 0, maxImportance: 100 });
+    setFilter({ minImportance: 0, maxImportance: 100 });
   };
 
   return (
@@ -45,13 +75,12 @@ export const Filter = () => {
       <FilterItemWrapper>
         <Text>처리상태</Text>
         <Controller
-          name="processStauts"
+          name="potholeProgressStatus"
           control={control}
-          defaultValue="선택"
           render={({ field }) => (
             <Dropdown
-              dropdownList={['최초발견', '응급보수 중', '응급보수 완료', '정식보수 중', '정식보수 완료', '보수중단']}
-              value={field.value}
+              dropdownList={potholeProgressStatusList.map((item) => item.display)}
+              value={field.value || ''}
               onChange={field.onChange}
             />
           )}
@@ -65,9 +94,8 @@ export const Filter = () => {
         <Controller
           name="sort"
           control={control}
-          defaultValue="선택"
           render={({ field }) => (
-            <Dropdown dropdownList={['위험도순', '중요도순']} value={field.value} onChange={field.onChange} />
+            <Dropdown dropdownList={sortStatusList} value={field.value} onChange={field.onChange} />
           )}
         />
       </FilterItemWrapper>
@@ -75,7 +103,14 @@ export const Filter = () => {
       <Divider />
 
       <FilterItemWrapper>
-        <Button onClick={handleResetClick} background="none" color={colors.mainBlack} width="140px" border="none">
+        <Button
+          type="button"
+          onClick={handleResetClick}
+          background="none"
+          color={colors.mainBlack}
+          width="140px"
+          border="none"
+        >
           <Refresh />
           초기화
         </Button>
