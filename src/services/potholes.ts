@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { axiosInstance } from './axiosInstance';
+import { IFilter } from 'hooks/usePotholesStore';
 
 export interface IPotholeInfo {
   potholeId: number;
@@ -18,7 +19,10 @@ interface IPotholesResponse {
   data: IPotholeInfo[];
 }
 
-export const fetchAllPotholes = async () => {
-  const response: AxiosResponse<IPotholesResponse> = await axiosInstance.get('/manager/potholes');
+export const fetchPotholes = async (filter: IFilter) => {
+  const response: AxiosResponse<IPotholesResponse> = await axiosInstance.get('/manager/potholes-filters', {
+    params: filter,
+  });
+
   return response.data;
 };
