@@ -30,6 +30,7 @@
     "vite": "^5.3.3",
     "vite-tsconfig-paths": "^4.3.2",
     "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5",
     "zustand": "^4.5.4"
   },
   "scripts": {
