@@ -1,10 +1,10 @@
 import { AxiosResponse } from 'axios';
-import { unauthenticated } from './axiosInstance';
+import { axiosInstance } from './axiosInstance';
 
 export interface ReportRequest {
   startDate: string;
   endDate: string;
-  period: '' | '' | '' | '';
+  period: 'auto' | 'monthly' | 'weekly' | 'daily';
 }
 
 interface ReportResponse {
@@ -19,7 +19,7 @@ export const fetchReport = async (request: ReportRequest) => {
     console.log('Input 오류 - 형식 불일치 ');
     return null;
   }
-  const response: AxiosResponse<ReportResponse> = await unauthenticated.get('/manager/pothole-report');
+  const response: AxiosResponse<ReportResponse> = await axiosInstance.get('/manager/pothole-report');
   return response.data;
 };
 
