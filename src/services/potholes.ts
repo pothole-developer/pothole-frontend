@@ -8,7 +8,7 @@ export interface IPotholeInfo {
   lon: number;
   thumbnail: string;
   importance: number;
-  processStatus: string;
+  progressStatus: string;
 }
 
 interface IPotholesResponse {
@@ -28,6 +28,7 @@ interface PotholeHistories {
   createdAt: string;
   potholeHistoryId: number;
   potholeHistoryImages: PotholeHistoryImages[];
+  progressStatus: string;
 }
 
 export interface IPotholeDetail extends IPotholeInfo {
