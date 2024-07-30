@@ -4,7 +4,7 @@ import { axiosInstance } from './axiosInstance';
 export interface ReportRequest {
   startDate: string;
   endDate: string;
-  period: 'auto' | 'monthly' | 'weekly' | 'daily';
+  reportPeriod: 'auto' | 'monthly' | 'weekly' | 'daily';
 }
 
 interface ReportResponse {
@@ -14,13 +14,15 @@ interface ReportResponse {
   data: any[];
 }
 
-export const fetchReport = async (request: ReportRequest) => {
+export const fetchReport = async (request: ReportRequest) : Promise<any[]> => {
   if (isInvalidDateFormat(request.startDate) || isInvalidDateFormat(request.endDate)) {
     console.log('Input 오류 - 형식 불일치 ');
-    return null;
+    return [];
   }
-  const response: AxiosResponse<ReportResponse> = await axiosInstance.get('/manager/pothole-report');
-  return response.data;
+  const response: AxiosResponse<ReportResponse> = await axiosInstance.get('/manager/pothole-report', {
+    params: request
+  });
+  return response.data.data as unknown as any[];
 };
 
 const isInvalidDateFormat = (date: string) => {

@@ -3,41 +3,18 @@ import { Header } from './Header';
 import * as XLSX from 'xlsx';
 import { DefaultTable } from 'components/table/DefaultTable';
 import { useState } from 'react';
+import { fetchReport, ReportRequest } from 'services/report';
+
+type Period = 'auto' | 'monthly' | 'weekly' | 'daily';
 
 export const ReportPage = () => {
   const [showTable, setShowTable] = useState(false); // 테이블 표시 여부 상태
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [period, setPeriod] = useState('자동');
+  const [reportPeriod, setReportPeriod] = useState<Period>('auto');
   const [xAxis, setXAxis] = useState('기간');
   const [yAxis, setYAxis] = useState('위험도');
-
-  const data = [
-    {
-        "period": 202301,
-        "dangerous0to20": 108,
-        "dangerous20to40": 108,
-        "dangerous40to60": 108,
-        "dangerous60to80": 108,
-        "dangerous80to100": 108
-    },
-    {
-        "period": 202302,
-        "dangerous0to20": 80,
-        "dangerous20to40": 80,
-        "dangerous40to60": 80,
-        "dangerous60to80": 80,
-        "dangerous80to100": 80
-    },
-    {
-        "period": 202303,
-        "dangerous0to20": 83,
-        "dangerous20to40": 83,
-        "dangerous40to60": 83,
-        "dangerous60to80": 83,
-        "dangerous80to100": 83
-    }
-  ];
+  const [data, setData] = useState<any[]>([]);
 
   const validateDates = (start: string, end: string) => {
     if (!start || !end) {
@@ -69,10 +46,23 @@ export const ReportPage = () => {
       console.log('조회 조건:');
       console.log('시작 날짜:', startDate);
       console.log('종료 날짜:', endDate);
-      console.log('기간:', period);
+      console.log('기간:', reportPeriod);
       console.log('X축:', xAxis);
       console.log('Y축:', yAxis);
       setShowTable(true);
+
+      const request:ReportRequest = {
+        startDate: startDate,
+        endDate: endDate,
+        reportPeriod: reportPeriod
+      };
+      fetchReport(request).then(result => {
+        console.log(result);
+        if (result != null) {
+          setData(result);
+        }
+        setShowTable(true);
+      })
     }
   }
 
@@ -100,11 +90,11 @@ export const ReportPage = () => {
             }
           }} />
         <Label>기간:</Label>
-        <Select value={period} onChange={(e) => setPeriod(e.target.value)}>
-          <option value="자동">자동</option>
-          <option value="1달">1달</option>
-          <option value="1주">1주</option>
-          <option value="1일">1일</option>
+        <Select value={reportPeriod} onChange={(e) => setReportPeriod(e.target.value as Period)}>
+          <option value="auto">자동</option>
+          <option value="monthly">1달</option>
+          <option value="weekly">1주</option>
+          <option value="daily">1일</option>
         </Select>
         <Label>X축:</Label>
         <Select value={xAxis} onChange={(e) => setXAxis(e.target.value)}>
