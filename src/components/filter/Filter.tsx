@@ -6,6 +6,7 @@ import { colors } from 'styles/theme';
 import Refresh from 'assets/images/refresh.svg?react';
 import { Controller, useForm } from 'react-hook-form';
 import { usePotholesStore } from 'hooks/usePotholesStore';
+import { convertDisplayToValue, convertValueToDisplay } from 'utils/converter';
 
 const potholeProgressStatusList = [
   { display: '최초발견', value: 'REGISTER' },
@@ -34,9 +35,7 @@ export const Filter = () => {
     defaultValues: {
       minImportance: currentFilterValue.minImportance,
       maxImportance: currentFilterValue.maxImportance,
-      potholeProgressStatus: potholeProgressStatusList.find(
-        (item) => item.value === currentFilterValue.potholeProgressStatus,
-      )?.display,
+      potholeProgressStatus: convertValueToDisplay(currentFilterValue.potholeProgressStatus),
       sort: currentFilterValue.sort,
     },
   });
@@ -48,9 +47,7 @@ export const Filter = () => {
       return;
     }
 
-    const potholeProgressStatusValue = potholeProgressStatusList.find(
-      (item) => item.display === potholeProgressStatus,
-    )?.value;
+    const potholeProgressStatusValue = convertDisplayToValue(potholeProgressStatus);
     setFilter({ minImportance, maxImportance, potholeProgressStatus: potholeProgressStatusValue, sort });
   };
 
