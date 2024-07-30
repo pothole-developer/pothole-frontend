@@ -6,7 +6,10 @@ interface DefaultTableProps {
 }
 
 export const DefaultTable: React.FC<DefaultTableProps> = ({ data }) => {
-  const keys = Object.keys(data[0]);
+  let keys: any[] = [];
+  if (data.length != 0) {
+    keys = Object.keys(data[0]);
+  }
   
   return (
     <TableContainer>
