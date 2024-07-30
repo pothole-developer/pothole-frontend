@@ -24,5 +24,5 @@ export const ListViewContainer = styled.aside`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 30vw;
+  width: 25vw;
 `;
