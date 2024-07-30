@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const MapContainer = styled.div`
   height: 90vh;
-  width: 70vw;
+  width: 75vw;
   border-right: groove;
 `;
 

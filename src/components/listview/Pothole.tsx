@@ -10,7 +10,13 @@ import {
   PotholeImage,
 } from './Pothole.style';
 
-export const Pothole = ({ pothole }: { pothole: IPotholeInfo }) => {
+export const Pothole = ({
+  pothole,
+  openSlidebar,
+}: {
+  pothole: IPotholeInfo;
+  openSlidebar: (potholeId: number) => void;
+}) => {
   return (
     <PotholeContainer>
       <PotholeComponent>
@@ -25,7 +31,7 @@ export const Pothole = ({ pothole }: { pothole: IPotholeInfo }) => {
             <span>: {pothole.importance}%</span>
           </ImportanceText>
           <DetailButtonContainer>
-            <DetailButton>detail</DetailButton>
+            <DetailButton onClick={() => openSlidebar(pothole.potholeId)}>detail</DetailButton>
           </DetailButtonContainer>
         </PotholeContentComponent>
       </PotholeComponent>
