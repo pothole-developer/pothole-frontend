@@ -9,6 +9,7 @@ export interface IPotholeInfo {
   thumbnail: string;
   importance: number;
   progressStatus: string;
+  dangerous: number;
 }
 
 interface IPotholesResponse {
