@@ -21,7 +21,9 @@ export const PotholeListView = () => {
   };
 
   if (sortStatus === '중요도순') {
-    visiblePotholes.sort((a, b) => a.importance - b.importance);
+    visiblePotholes.sort((a, b) => b.importance - a.importance);
+  } else if (sortStatus === '위험도순') {
+    visiblePotholes.sort((a, b) => b.dangerous - a.dangerous);
   }
 
   const InnerItem = React.memo(({ item }: { item: IPotholeInfo }) => {
