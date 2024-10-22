@@ -26,3 +26,17 @@ export const ListViewContainer = styled.aside`
   flex-direction: column;
   width: 25vw;
 `;
+
+export const RightHeaderContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  text-align: end;
+`;
+
+export const RightHeaderContentContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  padding: 5px;
+`;
