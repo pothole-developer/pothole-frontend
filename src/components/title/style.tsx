@@ -26,3 +26,9 @@ export const ContactUsContainer = styled.div`
 export const TitleInfoText = styled.h3`
   text-align: center;
 `;
+
+export const ReportButtonContainer = styled.div`
+  padding: 10px;
+  align-content: center;
+  text-align: end;
+`;
