@@ -1,4 +1,4 @@
-import { ImportanceInput } from 'components/input/Input';
+import { ImportanceInput, RoadNameInput } from 'components/input/Input';
 import { Dash, Divider, FilterItemWrapper, FilterWrapper, ImportanceInputBox, Text } from './Filter.style';
 import { Dropdown } from 'components/dropdown/Dropdown';
 import { Button } from 'components/button/Button';
@@ -25,6 +25,7 @@ interface FormValues {
   minImportance: number;
   maxImportance: number;
   potholeProgressStatus?: IPotholeProgressStatusDisplay;
+  roadName: string;
   sort: '중요도순' | '위험도순';
 }
 
@@ -36,24 +37,27 @@ export const Filter = () => {
       minImportance: currentFilterValue.minImportance,
       maxImportance: currentFilterValue.maxImportance,
       potholeProgressStatus: convertValueToDisplay(currentFilterValue.potholeProgressStatus),
+      roadName: currentFilterValue.roadName,
       sort: currentFilterValue.sort,
     },
   });
 
   const onSubmit = (data: FormValues) => {
-    const { minImportance, maxImportance, potholeProgressStatus, sort } = data;
+    const { minImportance, maxImportance, potholeProgressStatus, roadName, sort } = data;
     if (maxImportance < minImportance) {
       alert('올바르지 않는 범위입니다');
       return;
     }
 
+    console.log(data);
+
     const potholeProgressStatusValue = convertDisplayToValue(potholeProgressStatus);
-    setFilter({ minImportance, maxImportance, potholeProgressStatus: potholeProgressStatusValue, sort });
+    setFilter({ minImportance, maxImportance, roadName: roadName, potholeProgressStatus: potholeProgressStatusValue, sort });
   };
 
   const handleResetClick = () => {
     reset({ minImportance: 0, maxImportance: 100 });
-    setFilter({ minImportance: 0, maxImportance: 100 });
+    setFilter({ minImportance: 0, maxImportance: 100, roadName: '' });
   };
 
   return (
@@ -82,6 +86,13 @@ export const Filter = () => {
             />
           )}
         />
+      </FilterItemWrapper>
+
+      <Divider />
+
+      <FilterItemWrapper>
+        <Text>도로명</Text>
+        <RoadNameInput {...register('roadName')}></RoadNameInput>
       </FilterItemWrapper>
 
       <Divider />

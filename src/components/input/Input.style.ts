@@ -6,9 +6,23 @@ export const ImportanceInputWrapper = styled.div`
   display: inline-block;
 `;
 
+export const RoadNameInputWrapper = styled.div`
+  position: relative;
+  width: fit-content;
+`;
+
 export const StyledImportanceInput = styled.input`
   width: 60px;
   height: 24px;
+  padding: 0 10px;
+  border: 1.8px solid ${colors.mainGrey};
+  border-radius: 5px;
+  box-sizing: border-box;
+`;
+
+export const StyledRoadNameInput = styled.input`
+  width: 140px;
+  height: 30px;
   padding: 0 10px;
   border: 1.8px solid ${colors.mainGrey};
   border-radius: 5px;
